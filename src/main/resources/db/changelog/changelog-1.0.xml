@@ -1,0 +1,88 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+
+    <changeSet id="20-09-2021" author="Ahto Nellis">
+        <createTable tableName="countries">
+            <column name="countries_id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="country_name" type="text">
+                <constraints unique="true"/>
+            </column>
+            <column name="capital" type="text"/>
+            <column name="population" type="int"/>
+            <column name="area" type="int"/>
+            <column name="hdi" type="double"/>
+            <column name="water" type="double"/>
+            <column name="density" type="double"/>
+            <column name="avgheight" type="int"/>
+            <column name="highestpoint" type="int"/>
+            <column name="lowestpoint" type="int"/>
+            <column name="country_code" type="text"/>
+            <column name="highest_name" type="text"/>
+            <column name="lowest_name" type="text"/>
+            <column name="flag_colors" type="int"/>
+            <column name="contour_code" type="text"/>
+        </createTable>
+
+    </changeSet>
+
+    <changeSet id="2021-09-21" author="Ahto">
+        <createTable tableName="games">
+            <column name="games_id" type="uuid" defaultValue="gen_random_uuid()">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="player1_id" type="int"/>
+            <column name="player2_id" type="int"/>
+            <column name="move" type="int"/>
+            <column name="game_type" type="boolean"/>
+            <column name="ready" type="boolean" defaultValue="false"/>
+            <column name="number_of_moves" type="int"/>
+            <column name="winner" type="int"/>
+        </createTable>
+
+        <createTable tableName="players">
+            <column name="players_id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="player_name" type="text">
+                <constraints unique="true"/>
+            </column>
+            <column name="points" type="int"/>
+            <column name="wins" type="int"/>
+            <column name="game_id" type="uuid">
+                <constraints  foreignKeyName="fk_players_games" references="games(games_id)"/>
+            </column>
+            <column name="move" type="boolean"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2021-09-21" author="Ahto Nellis">
+
+
+        <createTable tableName="cardsingame">
+            <column name="cardsingame_id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="player_id" type="int">
+                <constraints foreignKeyName="fk_cardsingame_players" references="players(players_id)"/>
+            </column>
+            <column name="game_id" type="uuid">
+                <constraints foreignKeyName="fk_cardsingame_games" references="games(games_id)"/>
+            </column>
+            <column name="country_id" type="int">
+                <constraints foreignKeyName="fk_cardsingame_countries" references="countries(countries_id)"/>
+            </column>
+            <column name="value_chosen" type="text"/>
+            <column name="card_count" type="int"/>
+
+        </createTable>
+
+    </changeSet>
+
+</databaseChangeLog>
+
