@@ -47,6 +47,14 @@ public class CardsRepository {
 
     }
 
+
+//    public UUID checkEmptyPlayer1() {
+//        String sql = "SELECT games_id FROM games WHERE player1_id IS NULL ORDER BY random() * 1 LIMIT 1";
+//        Map<String, Object> paramMap = new HashMap<>();
+//        return jdbcTemplate.queryForObject(sql, paramMap, UUID.class);
+//
+//    }
+
     public UUID checkEmptyPlayer2() {
         String sql = "SELECT games_id FROM games WHERE player2_id IS NULL AND game_type IS false ORDER BY random() * 1 LIMIT 1";
         Map<String, Object> paramMap = new HashMap<>();
